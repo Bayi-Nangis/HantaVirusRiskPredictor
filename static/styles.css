@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header{
+    background-color: red;
+    color: white;
+    position: sticky;
+    width: 100%;
+    z-index: 1000;
+}
+
+.form-group{
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: fit-content;
+}
+
+.checkbox-label{
+    padding: 10px 10px;
+}
+
+.hidden{
+    display: none;
+}
+
+button{
+    margin-left: 20px;
+    margin-bottom: 30px;
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div>
+            <h1>Hanta Virus Risk Predictor</h1>
+            <p>Machine Learning Powered Prognosis Risk Assessment</p>
+        </div>
+    </header>
+
+    <main>
+        <section>
+            <h2>Patient Data Input</h2>
+            <form id="triageForm">
+                <div class="form-group">
+                    <label class="field-label">Gender</label>
+                    <select name="gender" id="gender" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="field-label">Syndrome</label>
+                    <select name="syndrome" id="syndrome" required>
+                        <option value="HPS">HPS</option>
+                        <option value="HFRS">HFRS</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="field-label">Virus Strain</label>
+                    <select name="virus_strain" id="virus_strain" required>
+                        <option value="Andes">Andes</option>
+                        <option value="Araraquara">Araraquara</option>
+                        <option value="Choclo">Choclo</option>
+                        <option value="Dobrava">Dobrava</option>
+                        <option value="Hantaan">Hantaan</option>
+                        <option value="Puumala">Puumala</option>
+                        <option value="Seoul">Seoul</option>
+                        <option value="Laguna Negra">Laguna Negra</option>
+                        <option value="Sin Nombre">Sin Nombre</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="field-label">Age Group</label>
+                    <select name="age_group" id="age_group" required>
+                        <option value="0-14">0-14</option>
+                        <option value="15-29">15-29</option>
+                        <option value="30-44">30-44</option>
+                        <option value="45-59">45-59</option>
+                        <option value="60+">60+</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="field-label">Incubation Days</label>
+                    <input type="number" name="incubation_days" id="incubation_days" required min="1" max="60" placeholder="1-60">
+                </div>
+                <div class="form-group">
+                    <h3>Core Symptoms</h3>
+                    <div>
+                        <label class="checkbox-label"><input type="checkbox" name="fever" value="1">Fever</label>
+                        <label class="checkbox-label"><input type="checkbox" name="headache" value="1">Headache</label>
+                        <label class="checkbox-label"><input type="checkbox" name="nausea" value="1">Nausea</label>
+                    </div>
+                </div>
+                <div class="form-group" id="hps-features">
+                    <h3>HPS Symptoms</h3>
+                    <div>
+                        <label class="checkbox-label"><input type="checkbox" name="myalgia" value="1">Myalgia</label>
+                        <label class="checkbox-label"><input type="checkbox" name="cough" value="1">Cough</label>
+                        <label class="checkbox-label"><input type="checkbox" name="dyspnea" value="1">Dyspnea</label>
+                        <label class="checkbox-label"><input type="checkbox" name="tachycardia" value="1">Tachycardia</label>
+                        <label class="checkbox-label"><input type="checkbox" name="hypotension" value="1">Hypotension</label>
+                        <label class="checkbox-label"><input type="checkbox" name="pulmonary_edema" value="1">Pulmonary edema</label>
+                        <label class="checkbox-label"><input type="checkbox" name="thrombocytopenia" value="1">Thrombocytopenia</label>
+                    </div>
+                </div>
+                <div class="form-group hidden" id="hfrs-features">
+                    <h3>HFRS Symptoms</h3>
+                    <div>
+                        <label class="checkbox-label"><input type="checkbox" name="back_pain" value="1">Back Pain</label>
+                        <label class="checkbox-label"><input type="checkbox" name="abdominal_pain" value="1">Abdominal Pain</label>
+                        <label class="checkbox-label"><input type="checkbox" name="blurred_vision" value="1">Blurred Vision</label>
+                        <label class="checkbox-label"><input type="checkbox" name="petechiae" value="1">Petechiae</label>
+                        <label class="checkbox-label"><input type="checkbox" name="oliguria" value="1">Oliguria</label>
+                        <label class="checkbox-label"><input type="checkbox" name="proteinuria" value="1">Proteinuria</label>
+                        <label class="checkbox-label"><input type="checkbox" name="hemorrhage" value="1">Hemorrhage</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit">Execute Prediction</button>
+            </form>
+        </section>
+        <section>
+            <h2>Prediction Results</h2>
+            <div id="resultCard" class="result-card">
+                <p></p>
+            </div>
+        </section>
+    </main>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
