@@ -36,4 +36,8 @@ header{
 button{
     margin-left: 20px;
     margin-bottom: 30px;
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    font-weight: bold;
 }

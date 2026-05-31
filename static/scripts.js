@@ -14,24 +14,41 @@ syndromeSelector.addEventListener('change', function(e){
     }
 });
 
-triageForm.addEventListener('submit', function(e){
+triageForm.addEventListener('submit', async function(e){
     e.preventDefault();
     const formData = new FormData(triageForm);
     const payload = Object.fromEntries(formData);
     const inputs = triageForm.querySelectorAll('input[type="checkbox"]');
-    inputs.forEach(function(e){
-        if(e.closest('.hidden')){
-            payload[e.name] = 0;
+    inputs.forEach(function(el){
+        if(el.closest('.hidden')){
+            payload[el.name] = 0;
         }
         else{
-            if(e.checked === true){
-                payload[e.name] = 1;
+            if(el.checked === true){
+                payload[el.name] = 1;
             }
             else{
-                payload[e.name] = 0;
+                payload[el.name] = 0;
             }
         }
     });
     console.log(payload);
+    try {
+        const response = await fetch('/predict', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        if(data.success){
+            const status = data.prediction;
+            const confidence = data.confidence;
+            resultCard.innerHTML = `
+            <h3>Prediction: ${status}</h3>
+            <p>Confidence: ${confidence}%</p>`;
+        }
+    }
+    catch(error){
+        console.error(error);
+    }
 });
-
