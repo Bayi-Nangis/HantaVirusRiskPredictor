@@ -4,6 +4,7 @@ const hfrsSymptoms = document.getElementById('hfrs-features');
 const triageForm = document.getElementById('triageForm');
 const resultCard = document.getElementById('resultCard');
 
+// Syndrome selection, HPS or HFRS, show the relevant symptoms
 syndromeSelector.addEventListener('change', function(e){
     if(e.target.value === 'HPS'){
         hpsSymptoms.classList.remove('hidden');
@@ -14,6 +15,7 @@ syndromeSelector.addEventListener('change', function(e){
     }
 });
 
+// Submit button
 triageForm.addEventListener('submit', async function(e){
     e.preventDefault();
     const formData = new FormData(triageForm);
@@ -34,6 +36,7 @@ triageForm.addEventListener('submit', async function(e){
     });
     console.log(payload);
     try {
+        // Send form data and wait for the result
         const response = await fetch('/predict', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -41,6 +44,7 @@ triageForm.addEventListener('submit', async function(e){
         });
         const data = await response.json();
         if(data.success){
+            // Display the result
             const status = data.prediction;
             const confidence = data.confidence;
             resultCard.innerHTML = `
