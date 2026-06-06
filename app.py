@@ -37,6 +37,7 @@ CATEGORY_MAPPINGS = {
 try:
     model = joblib.load('hantavirusmodel.joblib')
     expected_features = joblib.load('model_features.joblib')
+    scaler = joblib.load('scaler.joblib')
 except Exception as e:
     print(f"Error loading model or expected features: {e}")
 
@@ -50,13 +51,16 @@ def predict():
     if request.method == 'POST':
         data = request.get_json()
         input_df = pd.DataFrame([data])
-        for col, mapping in CATEGORY_MAPPINGS.items():
+        for col, mapping in CATEGORY_MAPPINGS.items(): # Map the categorical values to their corresponding codes for the model
             if col in input_df.columns:
                 raw_val = input_df[col].iloc[0]
                 input_df[col] = mapping.get(raw_val, -1)
-        input_df = input_df.reindex(columns=expected_features, fill_value=0)
+        input_df = input_df.reindex(columns=expected_features, fill_value=0) # Ensure the input DataFrame has the same columns as the model expects
         for col in input_df.columns:
-            input_df[col] = pd.to_numeric(input_df[col], errors='coerce').fillna(0).astype(float)
+            input_df[col] = pd.to_numeric(input_df[col], errors='coerce').fillna(0).astype(float) # Convert all columns to numeric, filling non-convertible values with 0
+
+        if 'incubation_days' in input_df.columns:
+            input_df['incubation_days'] = scaler.transform(input_df[['incubation_days']]) # Scale the incubation_days feature using the same scaler used during training
         
         prediction = str(model.predict(input_df)[0])
         probability = model.predict_proba(input_df)[0]
