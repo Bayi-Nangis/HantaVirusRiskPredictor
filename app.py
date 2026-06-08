@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import pandas as pd
 import numpy as np
 import joblib
+import time
 
 app = Flask(__name__)
 
@@ -35,7 +36,7 @@ CATEGORY_MAPPINGS = {
 }
 
 try:
-    model = joblib.load('hantavirusmodel.joblib')
+    model = joblib.load('hantavirusmodel-balance2000.joblib')
     expected_features = joblib.load('model_features.joblib')
     scaler = joblib.load('scaler.joblib')
 except Exception as e:
@@ -48,6 +49,7 @@ def home():
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    start_time = time.time()
     if request.method == 'POST':
         data = request.get_json()
         input_df = pd.DataFrame([data])
@@ -66,7 +68,8 @@ def predict():
         probability = model.predict_proba(input_df)[0]
         class_index = list(model.classes_).index(prediction)
         confidence = float(probability[class_index]) * 100
-        
+        end_time = (time.time() - start_time) * 1000
+        print(f"Prediction made in {end_time:.2f} ms")
         return jsonify({
             "success": True,
             "prediction": prediction,
